@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Voiture from './Voiture';
+import ListeCourses from './ListeCourses';
 
 function App() {
+  const liste1 = ['Pain', 'Lait', 'Oeufs'];
+  const liste2 = ['Pommes', 'Bananes', 'Oranges'];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Exercice React</h1>
+
+      <h2>Voitures</h2>
+      <Voiture marque="Toyota" modele="Corolla" couleur="Blanche" />
+      <Voiture marque="Renault" modele="Clio" couleur="Rouge" />
+      <Voiture marque="BMW" modele="X5" couleur="Noire" />
+
+      <h2>Liste 1</h2>
+      <ListeCourses elements={liste1} />
+
+      <h2>Liste 2</h2>
+      <ListeCourses elements={liste2} />
     </div>
   );
 }
