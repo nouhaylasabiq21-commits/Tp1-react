@@ -1,71 +1,229 @@
-# Getting Started with Create React App
+# 📘 TP React - Introduction aux composants
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 👩‍💻 Réalisé par
 
-## Available Scripts
+Soukaina Imaghri
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🎯 Objectif du TP
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Ce TP a pour objectif de découvrir les bases de React :
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Création d’un projet React
+* Utilisation des composants fonctionnels
+* Passage de données avec les props
+* Validation des props avec PropTypes
+* Manipulation de listes dynamiques
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⚙️ Étape 1 : Installation et démarrage du projet
 
-### `npm run build`
+### Installation des outils
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Installer Node.js (version LTS)
+* Vérifier avec :
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+node -v
+npm -v
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Création du projet
 
-### `npm run eject`
+```bash
+npx create-react-app tp-react
+cd tp-react
+npm start
+```
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🧩 Étape 2 : Création du composant HelloWorld
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Fichier : `HelloWorld.js`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```jsx
+function HelloWorld() {
+  return <h1>Hello World !</h1>;
+}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default HelloWorld;
+```
 
-## Learn More
+### Utilisation dans `App.js`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+import HelloWorld from './HelloWorld';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function App() {
+  return (
+    <div>
+      <HelloWorld />
+    </div>
+  );
+}
 
-### Code Splitting
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+📸 Screenshot :
+<img width="960" height="539" alt="1" src="https://github.com/user-attachments/assets/e2d1eb3a-80fc-42f9-87d0-82e9a4e5bde6" />
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🧠 Étape 4 : Composant Profil avec props et PropTypes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Installation
 
-### Advanced Configuration
+```bash
+npm install prop-types
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Fichier : `Profil.js`
 
-### Deployment
+```jsx
+import PropTypes from 'prop-types';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+function Profil({ utilisateur, taille }) {
+  return (
+    <div>
+      <img src={utilisateur.photo} width={taille} alt={utilisateur.nom} />
+      <p>{utilisateur.nom}</p>
+    </div>
+  );
+}
 
-### `npm run build` fails to minify
+Profil.propTypes = {
+  utilisateur: PropTypes.shape({
+    nom: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+  }).isRequired,
+  taille: PropTypes.number,
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# Tp1-react" 
+Profil.defaultProps = {
+  taille: 100,
+};
+
+export default Profil;
+```
+
+### Utilisation dans `App.js`
+
+```jsx
+import Profil from './Profil';
+
+function App() {
+  const utilisateur = { nom: 'Emma', photo: '/user.png' };
+
+  return (
+    <div>
+      <Profil utilisateur={utilisateur} taille={150} />
+    </div>
+  );
+}
+```
+
+📸 Screenshot :
+<img width="956" height="514" alt="2" src="https://github.com/user-attachments/assets/05fb2f2a-6d90-4eaf-88ee-456b61e9f0c3" />
+
+
+---
+
+## 🚗 Étape 5 : Exercice 1 - Composant Voiture
+
+### Fichier : `Voiture.js`
+
+```jsx
+import PropTypes from 'prop-types';
+
+function Voiture({ marque, modele, couleur }) {
+  return (
+    <p>
+      Voiture : {marque} {modele}, Couleur : {couleur}
+    </p>
+  );
+}
+
+Voiture.propTypes = {
+  marque: PropTypes.string.isRequired,
+  modele: PropTypes.string.isRequired,
+  couleur: PropTypes.string.isRequired,
+};
+
+export default Voiture;
+```
+
+---
+
+## 🛒 Étape 5 : Exercice 2 - Liste dynamique
+
+### Fichier : `ListeCourses.js`
+
+```jsx
+import PropTypes from 'prop-types';
+
+function ListeCourses({ elements }) {
+  return (
+    <ul>
+      {elements.map((element, index) => (
+        <li key={index}>{element}</li>
+      ))}
+    </ul>
+  );
+}
+
+ListeCourses.propTypes = {
+  elements: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default ListeCourses;
+```
+
+---
+
+## 🔗 Utilisation finale dans `App.js`
+
+```jsx
+import Voiture from './Voiture';
+import ListeCourses from './ListeCourses';
+
+function App() {
+  const liste1 = ['Pain', 'Lait', 'Oeufs'];
+  const liste2 = ['Pommes', 'Bananes', 'Oranges'];
+
+  return (
+    <div>
+      <h2>Voitures</h2>
+      <Voiture marque="Toyota" modele="Corolla" couleur="Blanche" />
+      <Voiture marque="Renault" modele="Clio" couleur="Rouge" />
+      <Voiture marque="BMW" modele="X5" couleur="Noire" />
+
+      <h2>Listes de courses</h2>
+      <ListeCourses elements={liste1} />
+      <ListeCourses elements={liste2} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+📸 Screenshot :
+
+<img width="960" height="504" alt="3" src="https://github.com/user-attachments/assets/6925f502-21ac-44c0-8a07-e420b886f417" />
+
+---
+
+## ✅ Conclusion
+
+Ce TP m’a permis de :
+
+* Comprendre les composants React
+* Utiliser les props pour passer des données
+* Valider les données avec PropTypes
+* Créer des interfaces dynamiques avec des listes
+
+---
